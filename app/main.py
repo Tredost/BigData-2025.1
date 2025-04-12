@@ -28,12 +28,14 @@ def create_app():
     return app
 
 
+# Expondo a variável global "app" para que o Gunicorn a encontre
+app = create_app()
+
 if __name__ == "__main__":
-    flask_app = create_app()
-    with flask_app.app_context():
+    with app.app_context():
         db.create_all()  # Cria as tabelas no MySQL (caso não existam)
     print("Rotas registradas:")
-    for rule in flask_app.url_map.iter_rules():
+    for rule in app.url_map.iter_rules():
         print(rule, rule.endpoint)
 
-    flask_app.run(debug=True)
+    app.run(debug=True)
