@@ -28,10 +28,10 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -64,7 +64,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -72,10 +71,15 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FE87471CD0A54D81AC47EC30FDF73AAB }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8633F01255C94D23A0BC718EFC2527A1 }}
 
+      - name: Update App Settings in Azure Web App
+        run: |
+          az webapp config appsettings set --name 'asecommerce' \
+            --resource-group 'big-data-ecommerce' \
+            --settings SQLALCHEMY_DATABASE_URI=${{ secrets.SQLALCHEMY_DATABASE_URI }} SECRET_KEY=${{ secrets.SECRET_KEY }} COSMOS_KEY=${{ secrets.COSMOS_KEY }} COSMOS_ENDPOINT=${{ secrets.COSMOS_ENDPOINT }} COSMOS_DB_NAME=${{ secrets.COSMOS_DB_NAME }} COSMOS_CONTAINER_NAME=${{ secrets.COSMOS_CONTAINER_NAME }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'asecommerce'
           slot-name: 'Production'
-          
