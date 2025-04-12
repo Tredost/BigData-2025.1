@@ -29,7 +29,7 @@ def create_app():
 
 
 # Expondo a variável global "app" para que o Gunicorn a encontre
-app = create_app()
+#app = create_app()
 
 if __name__ == "__main__":
     with app.app_context():
