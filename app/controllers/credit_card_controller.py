@@ -34,6 +34,12 @@ class CreditCardList(Resource):
                 except ValueError:
                     return {"error": "Formato de data inválido. Use dd/mm/yyyy."}, 400
 
+            if len(numero) != 16 or not numero.isdigit():
+                return {"error": "Número do cartão deve ter 16 dígitos."}, 400
+
+            if len(cvv) != 3 or not cvv.isdigit():
+                return {"error": "Número do CVV deve ter 3 dígitos."}, 400
+
             new_card = CreditCard(
                 user_id=user_id,
                 numero=numero,
