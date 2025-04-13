@@ -5,12 +5,8 @@ from datetime import datetime
 from app.db.mysql_db import db
 from app.models.credit_card_model import CreditCard
 
-credit_card_ns = Namespace(
-    "credit_card",
-    description="Operações relacionadas a cartões de crédito do usuário"
-)
+credit_card_ns = Namespace("credit_card", description="Operações relacionadas a cartões de crédito do usuário")
 
-# Definindo o modelo de cartão para documentação (Swagger)
 credit_card_model = credit_card_ns.model("CreditCardModel", {
     "numero": fields.String(required=True, description="Número do cartão de crédito"),
     "dtExpiracao": fields.String(required=True, description="Data de expiração em formato (dd/mm/yyyy)"),
@@ -28,8 +24,8 @@ class CreditCardList(Resource):
         try:
             numero = data["numero"]
             cvv = data["cvv"]
-            saldo = data.get("saldo")
-            dt_str = data.get("dtExpiracao")
+            saldo = data["saldo"]
+            dt_str = data["dtExpiracao"]
             dt_exp = None
 
             if dt_str:
