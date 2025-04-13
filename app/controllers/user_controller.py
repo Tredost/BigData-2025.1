@@ -1,3 +1,4 @@
+# C:\Users\ianes\Desktop\BigData-2025.1\app\controllers\user_controller.py
 from flask_restx import Namespace, Resource, fields
 from flask import request
 from datetime import datetime
@@ -22,16 +23,15 @@ class UserList(Resource):
     @user_ns.response(201, "Usuário criado com sucesso")
     @user_ns.response(400, "Erro ao criar usuário")
     def post(self):
-        """Cria um novo usuário no MySQL, esperando data no formato dd/mm/yyyy."""
         data = user_ns.payload
         try:
             nome = data["nome"]
             email = data["email"]
             cpf = data["cpf"]
             telefone = data.get("telefone")
-
             dt_str = data.get("dtNascimento")
             dt_nasc = None
+            
             if dt_str:
                 try:
                     dt_nasc = datetime.strptime(dt_str, "%d/%m/%Y").date()

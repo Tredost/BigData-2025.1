@@ -24,35 +24,27 @@ class CreditCardList(Resource):
     @credit_card_ns.response(201, "Cartão criado com sucesso")
     @credit_card_ns.response(400, "Erro ao criar cartão de crédito")
     def post(self, user_id):
-        """
-        Cria um novo cartão de crédito para o usuário informado.
-        Exemplo de body (JSON):
-        {
-          "numero": "4000123456789010",
-          "dtExpiracao": "2027-04-11T03:02:45.999Z",
-          "cvv": "123",
-          "saldo": 5000
-        }
-        """
         data = credit_card_ns.payload
         try:
-            dt_exp = data.get("dtExpiracao")
-            if dt_exp:
-                # Tenta converter a string "dd/mm/yyyy" para um objeto datetime
+            numero = data["nome"]
+            cvv = data["cvv"]
+            saldo = data.get("saldo")
+            dt_str = data.get("dtExpiracao")
+            dt_exp = None
+
+            if dt_str:
                 try:
-                    dt_exp = datetime.strptime(dt_exp, "%d/%m/%Y").date()
+                    dt_exp = datetime.strptime(dt_str, "%d/%m/%Y").date()
                 except ValueError:
                     return {"error": "Formato de data inválido. Use dd/mm/yyyy."}, 400
-            else:
-                return {"error": "Data de expiração é obrigatória."}, 400
+
             new_card = CreditCard(
                 user_id=user_id,
-                numero=data["numero"],
+                numero=numero,
                 dtExpiracao=dt_exp,
-                cvv=data["cvv"],
-                saldo=data["saldo"]
+                cvv=cvv,
+                saldo=saldo
             )
-
             db.session.add(new_card)
             db.session.commit()
 
@@ -60,6 +52,7 @@ class CreditCardList(Resource):
                 "message": "Cartão criado com sucesso",
                 "card": new_card.to_dict()
             }, 201
+            
         except Exception as e:
             db.session.rollback()
             return {"error": str(e)}, 400
