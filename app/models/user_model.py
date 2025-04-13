@@ -27,7 +27,6 @@ class User(db.Model):
             "id": self.id,
             "nome": self.nome,
             "email": self.email,
-            # Exemplo: converte para string "dd/mm/yyyy" se houver data
             "dtNascimento": self.dtNascimento.strftime("%d/%m/%Y") if self.dtNascimento else None,
             "cpf": self.cpf,
             "telefone": self.telefone

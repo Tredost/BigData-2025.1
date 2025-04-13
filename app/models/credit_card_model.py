@@ -6,7 +6,6 @@ class CreditCard(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=False)
-
     numero = db.Column(db.String(16), nullable=False)
     dtExpiracao = db.Column(db.Date, nullable=False)
     cvv = db.Column(db.String(3), nullable=False)
@@ -24,7 +23,7 @@ class CreditCard(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "numero": self.numero,
-            "dtExpiracao": self.dtExpiracao.isoformat() if self.dtExpiracao else None,
+            "dtExpiracao": self.dtNascimento.strftime("%d/%m/%Y") if self.dtExpiracao else None,
             "cvv": self.cvv,
             "saldo": self.saldo
         }
