@@ -40,7 +40,7 @@ class CreditCardList(Resource):
             if dt_exp:
                 # Tenta converter a string "dd/mm/yyyy" para um objeto datetime
                 try:
-                    dt_exp = datetime.strptime(dt_exp, "%d/%m/%Y")
+                    dt_exp = datetime.strptime(dt_exp, "%d/%m/%Y").date()
                 except ValueError:
                     return {"error": "Formato de data inválido. Use dd/mm/yyyy."}, 400
             else:
