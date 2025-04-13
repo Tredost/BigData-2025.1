@@ -23,7 +23,7 @@ class CreditCard(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "numero": self.numero,
-            "dtExpiracao": self.dtNascimento.strftime("%d/%m/%Y") if self.dtExpiracao else None,
+            "dtExpiracao": self.dtExpiracao.strftime("%d/%m/%Y") if self.dtExpiracao else None,
             "cvv": self.cvv,
             "saldo": self.saldo
         }
