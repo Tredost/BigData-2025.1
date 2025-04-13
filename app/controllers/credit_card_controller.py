@@ -26,7 +26,7 @@ class CreditCardList(Resource):
     def post(self, user_id):
         data = credit_card_ns.payload
         try:
-            numero = data["nome"]
+            numero = data["numero"]
             cvv = data["cvv"]
             saldo = data.get("saldo")
             dt_str = data.get("dtExpiracao")
@@ -52,7 +52,7 @@ class CreditCardList(Resource):
                 "message": "Cartão criado com sucesso",
                 "card": new_card.to_dict()
             }, 201
-            
+
         except Exception as e:
             db.session.rollback()
             return {"error": str(e)}, 400
