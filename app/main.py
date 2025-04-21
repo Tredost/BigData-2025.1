@@ -39,3 +39,6 @@ if __name__ == "__main__":
         print(rule, rule.endpoint)
 
     app.run(debug=True)
+
+
+#eu amo o ian menezes
