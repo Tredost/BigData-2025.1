@@ -12,7 +12,7 @@ user_ns = Namespace("users", description="Operações relacionadas a usuários")
 user_model = user_ns.model("UserModel", {
     "nome": fields.String(required=True, description="Nome do usuário"),
     "email": fields.String(required=True, description="Email do usuário"),
-    "dtNascimento": fields.String(required=False, description="Data de Nascimento (dd/mm/yyyy)"),
+    "dtNascimento": fields.String(required=False, description="Data de Nascimento (dd/mm/yyyy)", example="31/12/1990"),
     "cpf": fields.String(required=True, description="CPF do usuário"),
     "telefone": fields.String(required=False, description="Telefone do usuário")
 })
@@ -31,7 +31,7 @@ class UserList(Resource):
             telefone = data.get("telefone")
             dt_str = data.get("dtNascimento")
             dt_nasc = None
-            
+
             if dt_str:
                 try:
                     dt_nasc = datetime.strptime(dt_str, "%d/%m/%Y").date()

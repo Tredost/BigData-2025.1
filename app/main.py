@@ -3,6 +3,7 @@ from flask import Flask
 from app.config import Config
 from app.db.mysql_db import db
 from app.swagger.swagger_setup import configure_swagger
+from app.bot.messages_controller import bp as bot_bp
 
 def create_app():
     app = Flask(__name__)
@@ -25,6 +26,12 @@ def create_app():
     api.add_namespace(address_ns, path="/address")
     api.add_namespace(credit_card_ns, path="/credit_card")
 
+    # Registra o Blueprint do bot
+    try:
+        app.register_blueprint(bot_bp)
+    except Exception as e:
+        print(f"Bot endpoint não foi carregado: {e}")
+
     return app
 
 
@@ -37,7 +44,6 @@ if __name__ == "__main__":
     print("Rotas registradas:")
     for rule in app.url_map.iter_rules():
         print(rule, rule.endpoint)
-
     app.run(debug=True)
 
 

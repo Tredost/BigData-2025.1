@@ -9,7 +9,7 @@ credit_card_ns = Namespace("credit_card", description="Operações relacionadas 
 
 credit_card_model = credit_card_ns.model("CreditCardModel", {
     "numero": fields.String(required=True, description="Número do cartão de crédito"),
-    "dtExpiracao": fields.String(required=True, description="Data de expiração em formato (dd/mm/yyyy)"),
+    "dtExpiracao": fields.String(required=True, description="Data de expiração em formato (dd/mm/yyyy)", example="31/12/1990"),
     "cvv": fields.String(required=True, description="Código de segurança do cartão"),
     "saldo": fields.Float(required=True, description="Saldo inicial disponível no cartão")
 })
