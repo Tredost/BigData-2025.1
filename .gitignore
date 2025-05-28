@@ -2,5 +2,6 @@
 .env.local
 .vscode
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
